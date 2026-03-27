@@ -11,17 +11,19 @@ RUN sudo apt-get update && sudo apt-get install -y \
     libgmp-dev \
     && sudo rm -rf /var/lib/apt/lists/*
 
-# Install OCaml dependencies
-RUN opam install dream yojson dune --yes
-
-# Copy project files
+# Copy project files for dependency resolution
 COPY --chown=opam:opam dune-project grammar_forge.opam ./
+
+# Install OCaml dependencies via opam
+RUN opam install . --deps-only --yes
+
+# Copy source files
 COPY --chown=opam:opam lib/ lib/
 COPY --chown=opam:opam bin/ bin/
-COPY --chown=opam:opam test/ test/
 
 # Build
-RUN eval $(opam env) && dune build --release
+RUN opam exec -- dune build --release && \
+    ls -la _build/default/bin/
 
 # Stage 2: Runtime
 FROM debian:bookworm-slim
