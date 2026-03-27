@@ -15,15 +15,16 @@ RUN sudo apt-get update && sudo apt-get install -y \
 COPY --chown=opam:opam dune-project grammar_forge.opam ./
 
 # Install OCaml dependencies via opam
-RUN opam install . --deps-only --yes
+RUN opam install . --deps-only --yes && \
+    opam install lwt_ppx --yes
 
-# Copy source files
+# Copy all source files
 COPY --chown=opam:opam lib/ lib/
 COPY --chown=opam:opam bin/ bin/
+COPY --chown=opam:opam test/ test/
 
-# Build
-RUN opam exec -- dune build --release && \
-    ls -la _build/default/bin/
+# Build the binary explicitly
+RUN opam exec -- dune build bin/main.exe 2>&1
 
 # Stage 2: Runtime
 FROM debian:bookworm-slim
