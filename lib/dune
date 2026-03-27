@@ -1,0 +1,4 @@
+(library
+ (name grammar_forge)
+ (libraries dream yojson)
+ (preprocess (pps lwt_ppx)))

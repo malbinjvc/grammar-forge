@@ -1,0 +1,11 @@
+_build/
+*.install
+*.byte
+*.native
+.merlin
+*.exe
+_opam/
+.DS_Store
+*.swp
+*.swo
+*~

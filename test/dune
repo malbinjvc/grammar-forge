@@ -1,0 +1,3 @@
+(test
+ (name test_grammar_forge)
+ (libraries grammar_forge alcotest dream str))
