@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM ocaml/opam:debian-12-ocaml-5.2 AS builder
+FROM ocaml/opam:debian-12-ocaml-5.3 AS builder
 
 WORKDIR /home/opam/app
 
